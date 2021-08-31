@@ -1,6 +1,9 @@
 .rightbar {
-  flex: 3;
+  width: 20%;
   padding: 1rem;
+  position: fixed;
+
+  right: 10px;
 }
 .gift__container {
   display: flex;
@@ -11,7 +14,11 @@
   width: 40px;
   height: 40px;
 }
-
+.gift__ad {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+}
 .gift__container span {
   font-weight: 300;
   font-size: 15;
@@ -50,4 +57,9 @@
 
 .rightbar__freind h4 {
   margin-left: 1rem;
+}
+
+.rightbar__freindsOnline {
+  overflow-y: scroll;
+  height: 45vh;
 }

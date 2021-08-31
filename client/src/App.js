@@ -1,17 +1,10 @@
-import Navbar from "./components/navbar/Navbar";
 import "./app.css";
-import Sidebar from "./components/sidebar/Sidebar";
-import Feed from "./components/feed/Feed";
-import RightBar from "./components/rightbar/RightBar";
+import Home from "./pages/home/Home";
+import Profile from "./pages/profile/Profile";
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <div className="home__container">
-        <Sidebar />
-        <Feed />
-        <RightBar />
-      </div>
+      <Profile />
     </div>
   );
 }

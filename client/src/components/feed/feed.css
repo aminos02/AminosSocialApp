@@ -1,6 +1,7 @@
 .feed {
-  flex: 5;
+  width: 60%;
   padding: 1rem;
+  margin-left: 20%;
   height: calc(100vh - 60px);
   /* position: sticky;
   overflow-y: auto;*/

@@ -5,18 +5,22 @@ import { Users } from "../../dummyData";
 function RightBar() {
   return (
     <div className="rightbar">
-      <div className="gift__container">
-        <img src="/assets/gift.png" className="gift__img" alt="gift" />
-        <span className="">
-          <strong>Pola Foster</strong> and <strong>3 other freinds</strong> have
-          a birthday today
-        </span>
+      <div className="gift__ad">
+        <div className="gift__container">
+          <img src="/assets/gift.png" className="gift__img" alt="gift" />
+          <span className="">
+            <strong>Pola Foster</strong> and <strong>3 other freinds</strong>{" "}
+            have a birthday today
+          </span>
+        </div>
+        <img src="/assets/ad.png " className="rightbar__ad" alt="AD" />
+        <h3 style={{ margin: "1rem 0" }}>Online freinds</h3>
       </div>
-      <img src="/assets/ad.png " className="rightbar__ad" alt="AD" />
-      <h3 style={{ margin: "1rem 0" }}>Online freinds</h3>
-      {Users.map((u) => (
-        <Freind key={u.id} {...u} />
-      ))}
+      <div className="rightbar__freindsOnline">
+        {Users.map((u) => (
+          <Freind key={u.id} {...u} />
+        ))}
+      </div>
     </div>
   );
 }
