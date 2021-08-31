@@ -2,17 +2,18 @@
   flex: 5;
   padding: 1rem;
   height: calc(100vh - 60px);
-  background-color: var(--clr-grey-10);
-  position: sticky;
-  overflow-y: auto;
+  /* position: sticky;
+  overflow-y: auto;*/
 }
-.feed::-webkit-scrollbar {
+
+/*.feed::-webkit-scrollbar {
   display: none;
-}
-.feed {
+}*/
+
+/*.feed {
   -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
+/* scrollbar-width: none; /* Firefox */
+/*}*/
 .shareItem {
   box-shadow: var(--light-shadow);
   border-radius: 10px;
@@ -62,4 +63,39 @@
   padding: 0.5em 1em;
   margin-left: 4rem;
   border: none;
+}
+/**************************/
+
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 600vh;
+  justify-content: space-around;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100vmin;
+}
+
+.container p {
+  font-family: Merriweather, sans-serif;
+  font-size: 20px;
+  line-height: 1.5;
+  max-width: 70vmin;
+  text-align: justify;
+  text-transform: none;
+}
+.image {
+  background: white;
+  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.25);
+  border: 15px solid white;
+  border-width: 1vmin 1vmin 10vmin 1vmin;
+  height: 70vmin;
+  overflow: hidden;
+  width: 70vmin;
+}
+.image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }

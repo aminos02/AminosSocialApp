@@ -1,5 +1,6 @@
 import React from "react";
 import "./sidebar.css";
+import { Users } from "../../dummyData";
 import {
   RssFeed,
   Chat,
@@ -60,22 +61,22 @@ function Sidebar() {
       </div>
       <hr className="sidebar__line" />
       <div className="sidebar__freinds">
-        <Freind image={"/assets/person/1.jpeg"} name="Sara Loya" />
-        <Freind image={"/assets/person/2.jpeg"} name="Moha Aso" />
-        <Freind image={"/assets/person/3.jpeg"} name="Mimi Sghayra" />
-        <Freind image={"/assets/person/11.jpg"} name="SA Lamer" />
-        <Freind image={"/assets/person/4.jpeg"} name="Rahja Barhoucha" />
-        <Freind image={"/assets/person/4.jpeg"} name="Rahja Barhoucha" />
-        <Freind image={"/assets/person/4.jpeg"} name="Rahja Barhoucha" />
+        {Users.map((u) => (
+          <Freind key={u.id} {...u} />
+        ))}
       </div>
     </div>
   );
 }
 
-const Freind = ({ image, name }) => (
+const Freind = ({ profilePicture, username }) => (
   <div className="freind">
-    <img src={image} alt="person" className="navBar__img"></img>
-    <h4>{name}</h4>
+    <img
+      src={"/assets/" + profilePicture}
+      alt="person"
+      className="navBar__img"
+    ></img>
+    <h4>{username}</h4>
   </div>
 );
 export default Sidebar;

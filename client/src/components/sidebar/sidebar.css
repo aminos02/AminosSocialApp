@@ -1,9 +1,9 @@
 .sidebar {
   flex: 2;
   height: calc(100vh - 60px);
-  background-color: var(--clr-grey-10);
   position: sticky;
   overflow-y: scroll;
+  top: 60px;
 }
 
 ::-webkit-scrollbar {

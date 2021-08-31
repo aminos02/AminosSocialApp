@@ -56,5 +56,5 @@
   display: flex;
 }
 body {
-  background-color: lightgray;
+  background-color: var(--clr-grey-10);
 }

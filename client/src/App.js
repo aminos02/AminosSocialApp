@@ -1,8 +1,8 @@
 import Navbar from "./components/navbar/Navbar";
 import "./app.css";
 import Sidebar from "./components/sidebar/Sidebar";
-import Home from "./pages/home/Home";
 import Feed from "./components/feed/Feed";
+import RightBar from "./components/rightbar/RightBar";
 function App() {
   return (
     <div className="App">
@@ -10,7 +10,7 @@ function App() {
       <div className="home__container">
         <Sidebar />
         <Feed />
-        <Home />
+        <RightBar />
       </div>
     </div>
   );

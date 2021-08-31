@@ -3,42 +3,59 @@ import { MoreVert } from "@material-ui/icons";
 import "./post.css";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-function Post({ person_img, big_img, time, name, text, like, comments }) {
+import { Users } from "../../dummyData";
+
+function Post({ photo, date, desc, like, comment, userId, id }) {
+  const [likes, setLikes] = React.useState(like);
+  const [isLike, setIsLike] = React.useState(false);
+  const toggleLike = () => {
+    isLike ? setLikes(likes - 1) : setLikes(likes + 1);
+    setIsLike(!isLike);
+  };
+
+  const user = Users.find((e) => e.id === userId);
   return (
     <div className="post">
       <div className="post__header">
         <div className="left__header">
           <img
-            src={person_img}
+            src={"/assets/" + user.profilePicture}
             alt="person"
             className="navBar__img post__header__img"
           ></img>
-          <h4>{name}</h4>
-          <p>{time}</p>
+          <h4>{user.username}</h4>
+          <p>{date}</p>
         </div>
         <div className="right__header">
           <MoreVert />
         </div>
       </div>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos quia,
-        harum expedita veniam dolorem illo itaque aut tempore consequuntur vel.
-      </p>
-      <img src={big_img} className="post__big__img" alt="" />
+      <p>{desc}</p>
+      <img
+        src={`/assets/${photo}`}
+        className="post__big__img"
+        alt=""
+        data-scroll-zoom
+      />
       <div className="post__footer">
         <div className="post__footer__icons">
           <div
+            onClick={toggleLike}
             className="post__icon"
             style={{ background: "var(--clr-primary-5)" }}
           >
             <ThumbUpAltIcon style={{ color: "white" }} />
           </div>
-          <div className="post__icon" style={{ background: "#f66767" }}>
+          <div
+            onClick={toggleLike}
+            className="post__icon"
+            style={{ background: "#f66767" }}
+          >
             <FavoriteIcon style={{ color: "white" }} />
           </div>
-          <p>{like} people like it</p>
+          <p>{like ? likes : 0} people like it</p>
         </div>
-        <p>{comments} Comments</p>
+        <p>{comment ? comment : 0} Comments</p>
       </div>
     </div>
   );
