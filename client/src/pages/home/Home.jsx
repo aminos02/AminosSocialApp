@@ -1,21 +1,18 @@
-import React from "react";
-import "./home.css";
-import Navbar from "../../components/navbar/Navbar";
+import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
-import RightBar from "../../components/rightbar/RightBar";
+import Rightbar from "../../components/rightbar/Rightbar";
+import "./home.css"
 
-function Home() {
+export default function Home() {
   return (
-    <div className="home">
-      <Navbar />
-      <div className="home__container">
+    <>
+      <Topbar />
+      <div className="homeContainer">
         <Sidebar />
-        <Feed />
-        <RightBar />
+        <Feed/>
+        <Rightbar/>
       </div>
-    </div>
+    </>
   );
 }
-
-export default Home;

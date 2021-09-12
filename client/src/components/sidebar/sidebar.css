@@ -1,13 +1,13 @@
 .sidebar {
-  width: 20%;
-  height: calc(100vh - 60px);
-  position: fixed;
+  flex: 3;
+  height: calc(100vh - 50px);
   overflow-y: scroll;
-  top: 60px;
+  position: sticky;
+  top: 50px;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
   background-color: #f1f1f1;
@@ -15,45 +15,43 @@
 ::-webkit-scrollbar-thumb {
   background-color: rgb(179, 179, 179);
 }
-.sidebar__element {
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-}
-.sidebar__element:hover {
-  cursor: pointer;
-  color: var(--clr-primary-5);
-}
-.sidebar__element__icon {
-  margin-right: 2rem;
+
+.sidebarWrapper {
+  padding: 20px;
 }
 
-.sidebar__element__title {
-  font-size: medium;
-  font-weight: 600;
+.sidebarList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
-.sidebar__btn {
-  background-color: lightgray;
-  padding: 0.5em 1.5rem;
-  border: none;
-  font-size: 1.1rem;
-  border-radius: 5px;
-  margin-left: 1rem;
-  cursor: pointer;
-}
-.sidebar__line {
-  margin: 1rem;
-  background-color: var(--clr-grey-8);
-  height: 3px;
-  border: none;
-}
-.freind {
+
+.sidebarListItem {
   display: flex;
   align-items: center;
-  margin: 1rem 0;
+  margin-bottom: 20px;
 }
-.freind h4 {
-  font-weight: 700;
-  margin-left: 1rem;
-  letter-spacing: var(--spacing);
+
+.sidebarIcon {
+  margin-right: 15px;
 }
+
+.sidebarButton {
+  width: 150px;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.sidebarHr {
+  margin: 20px 0;
+}
+
+.sidebarFriendList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+

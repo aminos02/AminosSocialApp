@@ -1,8 +1,46 @@
-const router = require("express").Router();
 const User = require("../models/User");
+const router = require("express").Router();
 const bcrypt = require("bcrypt");
-/*GET USER*/
 
+//update user
+router.put("/:id", async (req, res) => {
+  if (req.body.userId === req.params.id || req.body.isAdmin) {
+    if (req.body.password) {
+      try {
+        const salt = await bcrypt.genSalt(10);
+        req.body.password = await bcrypt.hash(req.body.password, salt);
+      } catch (err) {
+        return res.status(500).json(err);
+      }
+    }
+    try {
+      const user = await User.findByIdAndUpdate(req.params.id, {
+        $set: req.body,
+      });
+      res.status(200).json("Account has been updated");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  } else {
+    return res.status(403).json("You can update only your account!");
+  }
+});
+
+//delete user
+router.delete("/:id", async (req, res) => {
+  if (req.body.userId === req.params.id || req.body.isAdmin) {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("Account has been deleted");
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  } else {
+    return res.status(403).json("You can delete only your account!");
+  }
+});
+
+//get a user
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -13,92 +51,68 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/*DELETE USER*/
-
-router.delete("/:id", async (req, res) => {
-  if (req.body.userId === req.params.id || req.body.isAdmin) {
-    try {
-      const user = await User.findByIdAndDelete(req.params.id);
-      return res.status(200).json("User has been removed");
-    } catch (err) {
-      return res.status(500).json(err.message);
-    }
-  } else {
-    return res.status(403).json("You can delete only your account");
+//get friends
+router.get("/friends/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const friends = await Promise.all(
+      user.followings.map((friendId) => {
+        return User.findById(friendId);
+      })
+    );
+    let friendList = [];
+    friends.map((friend) => {
+      const { _id, username, profilePicture } = friend;
+      friendList.push({ _id, username, profilePicture });
+    });
+    res.status(200).json(friendList);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
-/*UPDATE USER :: */
+//follow a user
 
-router.put("/:id", async (req, res) => {
-  if (req.body.userId === req.params.id || req.body.isAdmin) {
-    if (req.body.password) {
-      try {
-        const salt = await bcrypt.genSalt(10);
-        req.body.password = await bcrypt.hash(req.body.password, salt);
-      } catch (err) {
-        return res.status(500).json(err.message);
-      }
-    }
-    try {
-      const user = await User.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      });
-      res.status(200).json("Account has been updated");
-    } catch (err) {
-      return res.status(500).json(err.message);
-    }
-  } else {
-    return res.status(403).json("You can only update Your account");
-  }
-});
-
-/*Follow USER*/
 router.put("/:id/follow", async (req, res) => {
-  if (req.params.id !== req.body.userId) {
+  if (req.body.userId !== req.params.id) {
     try {
-      const target_user = await User.findById(req.params.id);
-      const follower = await User.findById(req.body.userId);
-      if (
-        !target_user.followers.includes(req.body.userId) &&
-        !follower.followings.includes(req.params.id)
-      ) {
-        await target_user.updateOne({ $push: { followers: req.body.userId } });
-        await follower.updateOne({ $push: { followings: req.params.id } });
-        return res.status(200).json("User Has been Followed");
+      const user = await User.findById(req.params.id);
+      const currentUser = await User.findById(req.body.userId);
+      if (!user.followers.includes(req.body.userId)) {
+        await user.updateOne({ $push: { followers: req.body.userId } });
+        await currentUser.updateOne({ $push: { followings: req.params.id } });
+        res.status(200).json("user has been followed");
       } else {
-        return res.status(403).json("Your already Following this User");
+        res.status(403).json("you allready follow this user");
       }
     } catch (err) {
-      return res.status(403).json(err.message);
+      res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("Cant follow Your self");
+    res.status(403).json("you cant follow yourself");
   }
 });
 
-/*UnFollow USER*/
+//unfollow a user
+
 router.put("/:id/unfollow", async (req, res) => {
-  if (req.params.id !== req.body.userId) {
+  if (req.body.userId !== req.params.id) {
     try {
-      const target_user = await User.findById(req.params.id);
-      const follower = await User.findById(req.body.userId);
-
-      if (
-        target_user.followers.includes(req.body.userId) &&
-        follower.followings.includes(req.params.id)
-      ) {
-        await target_user.updateOne({ $pull: { followers: req.body.userId } });
-        await follower.updateOne({ $pull: { followings: req.params.id } });
-        return res.status(200).json("User Has been UnFollowed");
+      const user = await User.findById(req.params.id);
+      const currentUser = await User.findById(req.body.userId);
+      if (user.followers.includes(req.body.userId)) {
+        await user.updateOne({ $pull: { followers: req.body.userId } });
+        await currentUser.updateOne({ $pull: { followings: req.params.id } });
+        res.status(200).json("user has been unfollowed");
       } else {
-        return res.status(403).json("Your not Following this User");
+        res.status(403).json("you dont follow this user");
       }
     } catch (err) {
-      return res.status(403).json(err.message);
+      res.status(500).json(err);
     }
   } else {
-    return res.status(403).json("Cant Unfollow Your self");
+    res.status(403).json("you cant unfollow yourself");
   }
 });
+
 module.exports = router;

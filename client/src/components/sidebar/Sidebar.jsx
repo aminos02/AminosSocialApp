@@ -1,6 +1,4 @@
-import React from "react";
 import "./sidebar.css";
-import { Users } from "../../dummyData";
 import {
   RssFeed,
   Chat,
@@ -12,71 +10,59 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-function Sidebar() {
+import { Users } from "../../dummyData";
+import CloseFriend from "../closeFriend/CloseFriend";
+
+export default function Sidebar() {
   return (
     <div className="sidebar">
-      <div className="sidebar__element">
-        <RssFeed fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Feed</h5>
-      </div>
-      <div className="sidebar__element">
-        <Chat fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Chats</h5>
-      </div>
-      <div className="sidebar__element">
-        <PlayCircleFilledOutlined
-          fontSize="medium"
-          className="sidebar__element__icon"
-        />
-        <h5 className="sidebar__element__title">Videos</h5>
-      </div>
-      <div className="sidebar__element">
-        <Group fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Groups</h5>
-      </div>
-      <div className="sidebar__element">
-        <Bookmark fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Bookmarks</h5>
-      </div>
-      <div className="sidebar__element">
-        <HelpOutline fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Questions</h5>
-      </div>
-      <div className="sidebar__element">
-        <WorkOutline fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Jobs</h5>
-      </div>
-      <div className="sidebar__element">
-        <Event fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Events</h5>
-      </div>
-      <div className="sidebar__element">
-        <School fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Courses</h5>
-      </div>
-      <div className="sidebar__element">
-        <ExpandMoreIcon fontSize="medium" className="sidebar__element__icon" />
-        <h5 className="sidebar__element__title">Show More</h5>
-      </div>
-      <hr className="sidebar__line" />
-      <div className="sidebar__freinds">
-        {Users.map((u) => (
-          <Freind key={u.id} {...u} />
-        ))}
+      <div className="sidebarWrapper">
+        <ul className="sidebarList">
+          <li className="sidebarListItem">
+            <RssFeed className="sidebarIcon" />
+            <span className="sidebarListItemText">Feed</span>
+          </li>
+          <li className="sidebarListItem">
+            <Chat className="sidebarIcon" />
+            <span className="sidebarListItemText">Chats</span>
+          </li>
+          <li className="sidebarListItem">
+            <PlayCircleFilledOutlined className="sidebarIcon" />
+            <span className="sidebarListItemText">Videos</span>
+          </li>
+          <li className="sidebarListItem">
+            <Group className="sidebarIcon" />
+            <span className="sidebarListItemText">Groups</span>
+          </li>
+          <li className="sidebarListItem">
+            <Bookmark className="sidebarIcon" />
+            <span className="sidebarListItemText">Bookmarks</span>
+          </li>
+          <li className="sidebarListItem">
+            <HelpOutline className="sidebarIcon" />
+            <span className="sidebarListItemText">Questions</span>
+          </li>
+          <li className="sidebarListItem">
+            <WorkOutline className="sidebarIcon" />
+            <span className="sidebarListItemText">Jobs</span>
+          </li>
+          <li className="sidebarListItem">
+            <Event className="sidebarIcon" />
+            <span className="sidebarListItemText">Events</span>
+          </li>
+          <li className="sidebarListItem">
+            <School className="sidebarIcon" />
+            <span className="sidebarListItemText">Courses</span>
+          </li>
+        </ul>
+        <button className="sidebarButton">Show More</button>
+        <hr className="sidebarHr" />
+        <ul className="sidebarFriendList">
+          {Users.map((u) => (
+            <CloseFriend key={u.id} user={u} />
+          ))}
+        </ul>
       </div>
     </div>
   );
 }
-
-const Freind = ({ profilePicture, username }) => (
-  <div className="freind">
-    <img
-      src={"/assets/" + profilePicture}
-      alt="person"
-      className="navBar__img"
-    ></img>
-    <h4>{username}</h4>
-  </div>
-);
-export default Sidebar;
