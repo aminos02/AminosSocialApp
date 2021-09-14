@@ -2,7 +2,7 @@ import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
@@ -18,13 +18,13 @@ export default function Rightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await axios.get("/users/friends/" + user?._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
       }
     };
-    getFriends();
+    user && getFriends();
   }, [user]);
 
   const handleClick = async () => {
@@ -48,12 +48,12 @@ export default function Rightbar({ user }) {
     return (
       <>
         <div className="birthdayContainer">
-          <img className="birthdayImg" src={PF + "/gift.png"} alt="birthday" />
+          <img className="birthdayImg" src={PF + "/gift.png"} alt="gift" />
           <span className="birthdayText">
             <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
           </span>
         </div>
-        <img className="rightbarAd" src={PF + "/ad.png"} alt="adsense" />
+        <img className="rightbarAd" src={PF + "/ad.png"} alt="ad" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {Users.map((u) => (
@@ -111,7 +111,7 @@ export default function Rightbar({ user }) {
                   alt=""
                   className="rightbarFollowingImg"
                 />
-                <span className="rightbarFollowingName">{friend.username}</span>
+                <span className="rightbar__freind">{friend.username}</span>
               </div>
             </Link>
           ))}
